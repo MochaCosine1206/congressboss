@@ -1,0 +1,31 @@
+from django.db import models
+
+class Members(models.Model):
+    id = models.CharField(max_length=32, null=False, primary_key=True)
+    chamber = models.CharField(max_length=32, null=True)
+    title = models.CharField(max_length=32, null=True)
+    short_title = models.CharField(max_length=4, null=True)
+    first_name = models.CharField(max_length=32, null=True)
+    middle_name = models.CharField(max_length=32, null=True)
+    last_name = models.CharField(max_length=32, null=True)
+    sufffix = models.CharField(max_length=32, null=True)
+    date_of_birth = models.CharField(max_length=32, null=True)
+    gender = models.CharField(max_length=1, null=True)
+    party = models.CharField(max_length=32, null=True)
+    twitter_account = models.CharField(max_length=32, null=True)
+    url = models.CharField(max_length=100, blank=True)
+    in_office = models.BooleanField(null=True)
+    next_election = models.CharField(max_length=4, null=True)
+    total_votes = models.IntegerField(null=True)
+    missed_votes = models.IntegerField(null=True)
+    total_present = models.IntegerField(null=True)
+    office = models.CharField(max_length=512, null=True)
+    phone = models.CharField(max_length=32, null=True)
+    state = models.CharField(max_length=32, null=True)
+    missed_votes_pct = models.FloatField(null=True)
+    votes_with_party_pct = models.FloatField(null=True)
+    votes_against_party_pct = models.FloatField(null=True)
+
+class Biographies(models.Model):
+    member_id = models.ForeignKey(Members, related_name='bio', null=True, on_delete=models.CASCADE)
+    description = models.TextField(null=True)
