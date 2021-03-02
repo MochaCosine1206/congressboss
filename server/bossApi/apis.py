@@ -5,6 +5,10 @@ from rest_framework.response import Response
 from .serializers import MembersSerializer, BiographiesSerializer
 import requests
 
+import os
+
+API_KEY = os.environ['API_KEY']
+
 class MembersViewSet(viewsets.ModelViewSet):
     """
         This is the Member viewset.
@@ -27,7 +31,7 @@ class MembersViewSet(viewsets.ModelViewSet):
         house_url = "https://api.propublica.org/congress/v1/116/house/members.json"
         senate_url = "https://api.propublica.org/congress/v1/116/senate/members.json"
         headers = {
-            "X-API-Key": "KkJ8F0BraYcIeORwZJEixt0lkYIDjS9YyrTjXltC",
+            "X-API-Key": API_KEY,
         }
         house_response = requests.get(house_url, headers=headers)
         senate_response = requests.get(senate_url, headers=headers)

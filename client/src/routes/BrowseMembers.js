@@ -7,13 +7,19 @@ import { AppContext } from '../context/AppContext'
 const BrowseMembers = () => {
     const [loading, setLoading] = useState(true);
     const { appData, appDispatch } = useContext(AppContext);
-    useEffect(() => {
-        axios.get("http://localhost:8000/apis/members").then((response) => {
+
+    const fetchData = async () => {
+         return await axios.get("http://localhost:8000/apis/members/").then((response) => {
             const { data } = response;
             appDispatch({ type: "LOAD_MEMBERS", membersList: data })
             setLoading(false);
         })
-    }, [appDispatch, setLoading])
+
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
 
     return (

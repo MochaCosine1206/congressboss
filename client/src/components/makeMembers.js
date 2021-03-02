@@ -4,7 +4,11 @@ const makeMembers = (n) => {
     for (let i = 0; i < num; i++) {
         membersList.push({
             id: i,
+            first_Name: `First ${i}`,
+            last_Name: `Last ${i}`,
             title: `Member # ${i}`,
+            party: "R",
+            chamber: "House",
         });
     }
     return membersList;
