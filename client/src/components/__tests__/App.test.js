@@ -1,8 +1,9 @@
 import { render } from '../../custom-render';
-import Landing from '../Landing';
+import App from '../App'
 
 describe("<App />", () => {
   it("Renders <Landing /> component", () => {
-    render(<Landing />)
+    render(<App />)
+    
   });
 });

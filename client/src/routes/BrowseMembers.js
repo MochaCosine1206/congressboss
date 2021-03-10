@@ -2,23 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { AppContext } from '../context/AppContext'
+import fetchPosts from '../services/fetchposts';
+
 
 
 const BrowseMembers = () => {
     const [loading, setLoading] = useState(true);
     const { appData, appDispatch } = useContext(AppContext);
 
-    const fetchData = async () => {
-         return await axios.get("http://localhost:8000/apis/members/").then((response) => {
-            const { data } = response;
-            appDispatch({ type: "LOAD_MEMBERS", membersList: data })
-            setLoading(false);
-        })
-
-    }
 
     useEffect(() => {
-        fetchData()
+       const fetchMembers =  async () => {
+           const members = await fetchPosts()
+            appDispatch({ type: "LOAD_MEMBERS", membersList: members })
+            setLoading(false);
+       }
+   
+       fetchMembers()
     }, [])
 
 

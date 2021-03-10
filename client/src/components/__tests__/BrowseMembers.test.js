@@ -1,22 +1,24 @@
-import React from 'react';
 import axios from 'axios';
-import { render, screen, waitForElementToBeRemoved } from '../../custom-render';
+import { render, screen, waitForElementToBeRemoved, cleanup } from '../../custom-render';
 import BrowseMembers from '../../routes/BrowseMembers';
 import { membersList } from "../makeMembers";
 
-jest.mock('axios')
 
-
-describe("<BrowseMembers />", () => {
-    it("fetches from the API in the <BrowseMembers /> component", async () => {
-        render(<BrowseMembers />)
-        
-        await waitForElementToBeRemoved(() => screen.getByText(/Fetching Members/i))
-        
-        expect(axios.get).toHaveBeenCalledTimes(1)
-        console.log("after get")
-        membersList.slice(0,15).forEach((item) => {
-            expect(screen.getByText(item.title)).toBeInTheDocument();
-        })
+test("good response", async () => {
+    await axios.get.mockImplementation((url = "http://localhost:8000/apis/members/") => {
+        switch (url) {
+            case "http://localhost:8000/apis/members/":
+                return Promise.resolve({ status: 200, data: membersList });
+            default:
+                throw Promise.reject(new Error('not found'))
+        }
     })
-})
+    render(<BrowseMembers />)
+    await waitForElementToBeRemoved(() => screen.getByText(/Fetching Members/i))
+    membersList.slice(0, 15).forEach((member) => {
+        expect(screen.getByText(`- ${member.title}`)).toBeInTheDocument();
+    })
+    cleanup()
+    // ...
+  });
+  
